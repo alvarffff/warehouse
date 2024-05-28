@@ -43,13 +43,14 @@ int warehouse_add_item(Warehouse *warehouse, int x, int y, int id)
 
 void warehouse_print(Warehouse warehouse)
 {   
+    printf("\n\n");
     for (int x = 0; x < warehouse.width; x++)
     {  
         for(int y = 0; y < warehouse.height; y++)
         {
-            printf("%d ",warehouse.cells[x][y]);
+            printf("%d",warehouse.cells[y][x]);
         }
         printf("\n");
     }
-     printf("\n\n");
+    
 }
