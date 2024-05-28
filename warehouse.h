@@ -8,13 +8,8 @@ typedef struct Warehouse{
     int height;
     int width;
     int **cells; 
+    int elements;
 } Warehouse;
-
-typedef struct Object{
-    int id;
-    int x;
-    int y;
-} Object ;
 
 Warehouse warehouse_load(char *filename);
 void warehouse_init(Warehouse *warehouse, int height, int width);
