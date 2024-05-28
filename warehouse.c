@@ -16,6 +16,7 @@ Warehouse warehouse_load(char *filename)
     int count_objects = 0;
     int count_x = 0;
     int count_y = 0;
+    printf("Following map loaded: \n");
     while ((ch = fgetc(fp)) != EOF)
     {
         if(ch == '\n'){
@@ -24,8 +25,6 @@ Warehouse warehouse_load(char *filename)
         }
         else
         {
-            
-             
             if(ch != '0' && ch != '\r')
             {   
                 //printf(" ID: %d, Count_x %d, count_y %d \n", ch -'0' , count_x, count_y);
@@ -36,11 +35,11 @@ Warehouse warehouse_load(char *filename)
             }
             count_x++;
         }
-    
+        
         putchar(ch);   
     }
 
-    warehouse_init(&w,count_x, count_y + 1);
+    warehouse_init(&w, count_x, count_y + 1);
     
     for (int i = 0; i < count_objects; i++)
     {   
@@ -91,11 +90,11 @@ int warehouse_add_item(Warehouse *warehouse, int x, int y, int id)
 void warehouse_print(Warehouse warehouse)
 {   
     printf("\n\n");
-    for (int x = 0; x < warehouse.width; x++)
+    for (int y = 0; y < warehouse.width; y++)
     {  
-        for(int y = 0; y < warehouse.height; y++)
+        for(int x = 0; x < warehouse.height; x++)
         {
-            printf("%d",warehouse.cells[y][x]);
+            printf("%d",warehouse.cells[x][y]);
         }
         printf("\n");
     }
