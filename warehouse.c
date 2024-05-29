@@ -1,4 +1,9 @@
 #include "warehouse.h"
+#include "object.h"
+
+static int robots_id = 0;
+static int count_objects = 0;
+Object object_list[100];
 
 Warehouse warehouse_load(char *filename)
 {
@@ -8,12 +13,9 @@ Warehouse warehouse_load(char *filename)
     {
         printf("Error: could not open file %s", filename);
     }
-
     // read one character at a time and
     // display it to the output
     char ch;
-    Object object_list[100]; //TODO change fixed lenght
-    int count_objects = 0;
     int count_x = 0;
     int count_y = 0;
     printf("Following map loaded: \n");
@@ -28,9 +30,20 @@ Warehouse warehouse_load(char *filename)
             if(ch != '0' && ch != '\r')
             {   
                 //printf(" ID: %d, Count_x %d, count_y %d \n", ch -'0' , count_x, count_y);
-                object_list[count_objects].id = ch -'0' ;
                 object_list[count_objects].x = count_x;
                 object_list[count_objects].y = count_y;
+
+                if(ch == '1')
+                {
+                    object_list[count_objects].id = 0;
+                    object_list[count_objects].type = OBSTACLE;
+                }
+                else if( ch == '4')
+                {
+                    object_list[count_objects].id = robots_id;
+                    object_list[count_objects].type = ROBOT;
+                    robots_id++;
+                }
                 count_objects++;
             }
             count_x++;
@@ -44,7 +57,7 @@ Warehouse warehouse_load(char *filename)
     for (int i = 0; i < count_objects; i++)
     {   
         //printf ("X %d, Y %d, ID %d \n", object_list[i].x, object_list[i].y, object_list[i].id);
-        warehouse_add_item(&w, object_list[i].x, object_list[i].y, object_list[i].id);
+        warehouse_add_item(&w, object_list[i].x, object_list[i].y, object_list[i].type);
     }
     // close the file
     fclose(fp);
@@ -82,6 +95,7 @@ int warehouse_add_item(Warehouse *warehouse, int x, int y, int id)
     if(warehouse->cells[x][y] == 0)
     {
         warehouse->cells[x][y] = id;
+        warehouse->elements++;
         return 0;
     }
     return -1; 

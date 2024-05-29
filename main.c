@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "warehouse.h"
+#include "object.h"
+
+extern Object object_list[100];
 
 int main()
 {
@@ -11,8 +14,6 @@ int main()
     warehouse_print(warehouse);
     warehouse_add_item(&warehouse,2,2,4);
     warehouse_print(warehouse);
-
-
     return 0;
 }
 
